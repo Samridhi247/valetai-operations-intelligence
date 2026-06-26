@@ -1,0 +1,17 @@
+.env
+
+__pycache__/
+*.pyc
+*.pyo
+
+.vscode/
+.idea/
+
+node_modules/
+
+data/chroma_db/
+data/valetai.db
+
+.streamlit/secrets.toml
+
+.DS_Store
