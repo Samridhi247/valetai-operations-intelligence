@@ -1,0 +1,9 @@
+.env
+__pycache__/
+*.pyc
+.git
+.gitignore
+.vscode/
+node_modules/
+data/chroma_db/
+*.md
