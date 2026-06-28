@@ -553,6 +553,9 @@ def run_sql_query(query: str) -> str:
     Base every answer ONLY on the SQL query results.
 
     """
+
+    print("========== SQL TOOL CALLED ==========")
+
     try:
         # conn = sqlite3.connect("data/valetai.db")
         import os
