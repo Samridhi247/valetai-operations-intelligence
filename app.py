@@ -35,16 +35,16 @@ def ask_question(request: QuestionRequest):
 
     print("Received question:", request.question)
 
-    result = graph_app.invoke(
-        {"question": request.question}
-    )
+    # result = graph_app.invoke(
+    #     {"question": request.question}
+    # )
 
-    print("Graph execution completed")
+    # print("Graph execution completed")
 
     return {
         "question": request.question,
-        "route": result.get("route"),
-        "answer": result["final_answer"]
+        "route": "test",
+        "answer": "Backend is working"
     }
 
 @api.get("/")
