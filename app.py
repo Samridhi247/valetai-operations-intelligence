@@ -18,12 +18,29 @@ api.add_middleware(
 class QuestionRequest(BaseModel):
     question: str
 
+# @api.post("/ask")
+# def ask_question(request: QuestionRequest):
+#     result = graph_app.invoke(
+#         {"question": request.question},
+#         config={"callbacks": [langfuse_handler]}
+#     )
+#     return {
+#         "question": request.question,
+#         "route": result.get("route"),
+#         "answer": result["final_answer"]
+#     }
+
 @api.post("/ask")
 def ask_question(request: QuestionRequest):
+
+    print("Received question:", request.question)
+
     result = graph_app.invoke(
-        {"question": request.question},
-        config={"callbacks": [langfuse_handler]}
+        {"question": request.question}
     )
+
+    print("Graph execution completed")
+
     return {
         "question": request.question,
         "route": result.get("route"),
