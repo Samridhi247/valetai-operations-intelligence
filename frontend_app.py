@@ -1,6 +1,10 @@
 import streamlit as st
 import requests
 
+import os
+
+BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
+
 # ---------------------------------------------------------
 # PAGE CONFIG
 # ---------------------------------------------------------
@@ -225,8 +229,15 @@ if question:
 
             try:
 
+                # response = requests.post(
+                #     "http://127.0.0.1:8000/ask",
+                #     json={
+                #         "question": question
+                #     },
+                #     timeout=120
+                # )
                 response = requests.post(
-                    "http://127.0.0.1:8000/ask",
+                    f"{BACKEND_URL}/ask",
                     json={
                         "question": question
                     },
@@ -268,66 +279,66 @@ if question:
                         if route == "sql":
 
                             st.markdown("""
-### SQL Analytics Flow
+                            ### SQL Analytics Flow
 
-User Question
+                            User Question
 
-⬇
+                            ⬇
 
-SQL Agent
+                            SQL Agent
 
-⬇
+                            ⬇
 
-SQLite Database
+                            SQLite Database
 
-⬇
+                            ⬇
 
-LLM Explanation
-""")
+                            LLM Explanation
+                            """)
 
                         elif route == "rag":
 
                             st.markdown("""
-### Retrieval-Augmented Generation
+                            ### Retrieval-Augmented Generation
 
-User Question
+                            User Question
 
-⬇
+                            ⬇
 
-Vector Search
+                            Vector Search
 
-⬇
+                            ⬇
 
-ChromaDB
+                            ChromaDB
 
-⬇
+                            ⬇
 
-LLM Reasoning
-""")
+                            LLM Reasoning
+                            """)
 
                         elif route == "hybrid":
 
                             st.markdown("""
-### Hybrid Intelligence
+                            ### Hybrid Intelligence
 
-User Question
+                            User Question
 
-⬇
+                            ⬇
 
-Router
+                            Router
 
-⬇
+                            ⬇
 
-SQL Analytics
+                            SQL Analytics
 
-+
+                            +
 
-Vector Search
+                            Vector Search
 
-⬇
+                            ⬇
 
-Final AI Synthesis
-""")
+                            Final AI Synthesis
+                            """)
 
                 st.session_state.messages.append(
                     {
@@ -340,21 +351,17 @@ Final AI Synthesis
             except Exception as e:
 
                 st.error(
-f"""
-Unable to connect to the backend.
+                f"""
+            Unable to connect to the backend.
 
-Please ensure:
+            Please ensure:
+            - FastAPI server is running
+            - Endpoint: {BACKEND_URL}/ask
 
-• FastAPI server is running
-
-• Endpoint:
-http://127.0.0.1:8000/ask
-
-Error:
-
-{e}
-"""
-                )
+            Error:
+            {e}
+            """
+            )
 
 # ---------------------------------------------------------
 # FOOTER
