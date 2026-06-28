@@ -47,19 +47,36 @@ class QuestionRequest(BaseModel):
 #         "answer": result["final_answer"]
 #     }
 
+# @api.post("/ask")
+# def ask_question(request: QuestionRequest):
+
+#     return {
+#         "question": request.question,
+#         "route": "sql",
+#         "answer": "Reached app.py successfully"
+#     }
+
+#     # Keep this below for now (it won't execute)
+#     result = graph_app.invoke(
+#         {"question": request.question}
+#     )
+
 @api.post("/ask")
 def ask_question(request: QuestionRequest):
 
-    return {
-        "question": request.question,
-        "route": "sql",
-        "answer": "Reached app.py successfully"
-    }
+    print("STEP 1: Request received")
 
-    # Keep this below for now (it won't execute)
     result = graph_app.invoke(
         {"question": request.question}
     )
+
+    print("STEP 2: Graph finished")
+
+    return {
+        "question": request.question,
+        "route": result.get("route"),
+        "answer": result["final_answer"]
+    }
 
 @api.get("/")
 def health_check():
