@@ -554,6 +554,13 @@ def run_sql_query(query: str) -> str:
 
     """
     try:
+        import os
+
+        print("========== DEBUG ==========")
+        print("Current directory:", os.getcwd())
+        print("Database exists:", os.path.exists("data/valetai.db"))
+        print("Absolute path:", os.path.abspath("data/valetai.db"))
+        print("===========================")
         conn = sqlite3.connect("data/valetai.db")
         result = pd.read_sql_query(query, conn)
         print("========== GENERATED SQL ==========")

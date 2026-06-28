@@ -76,20 +76,28 @@
 
 # conn.close()
 
+# import sqlite3
+
+# conn = sqlite3.connect("data/valetai.db")
+# cursor = conn.cursor()
+
+# cursor.execute("""
+# SELECT
+#     property_name,
+#     avg_completion_minutes,
+#     typeof(avg_completion_minutes)
+# FROM property_metrics
+# WHERE property_name='Green Oaks';
+# """)
+
+# print(cursor.fetchall())
+
+# conn.close()
+
 import sqlite3
 
 conn = sqlite3.connect("data/valetai.db")
-cursor = conn.cursor()
+cur = conn.cursor()
 
-cursor.execute("""
-SELECT
-    property_name,
-    avg_completion_minutes,
-    typeof(avg_completion_minutes)
-FROM property_metrics
-WHERE property_name='Green Oaks';
-""")
-
-print(cursor.fetchall())
-
-conn.close()
+cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
+print(cur.fetchall())
