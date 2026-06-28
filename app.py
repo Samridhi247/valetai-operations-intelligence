@@ -33,18 +33,18 @@ class QuestionRequest(BaseModel):
 @api.post("/ask")
 def ask_question(request: QuestionRequest):
 
-    print("Received question:", request.question)
+    print("STEP 1")
 
-    # result = graph_app.invoke(
-    #     {"question": request.question}
-    # )
+    result = graph_app.invoke(
+        {"question": request.question}
+    )
 
-    # print("Graph execution completed")
+    print("STEP 2")
 
     return {
         "question": request.question,
-        "route": "test",
-        "answer": "Backend is working"
+        "route": result.get("route"),
+        "answer": result["final_answer"]
     }
 
 @api.get("/")
