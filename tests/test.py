@@ -94,10 +94,17 @@
 
 # conn.close()
 
+# import sqlite3
+
+# conn = sqlite3.connect("data/valetai.db")
+# cur = conn.cursor()
+
+# cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
+# print(cur.fetchall())
+
 import sqlite3
 
 conn = sqlite3.connect("data/valetai.db")
-cur = conn.cursor()
-
-cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
-print(cur.fetchall())
+print(conn.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall())
+print(conn.execute("SELECT COUNT(*) FROM property_metrics").fetchone())
+print(conn.execute("SELECT COUNT(*) FROM waste_logs").fetchone())
