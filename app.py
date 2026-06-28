@@ -1,6 +1,11 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+# from main import app as graph_app, langfuse_handler
+print("======== Importing main.py ========")
+
 from main import app as graph_app, langfuse_handler
+
+print("======== Imported main.py successfully ========")
 
 api = FastAPI(title="ValetAI Operations Assistant")
 
