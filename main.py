@@ -230,8 +230,16 @@ hybrid
 #     return {**state, "route": route}
 
 # --- NODE 2: Analyst Agent (SQL) ---
+# def analyst_node(state: GraphState) -> GraphState:
+#     result = analyst_agent.invoke({"messages": [{"role": "user", "content": state["question"]}]})
+#     answer = result["messages"][-1].content
+#     print(f"[ANALYST AGENT] {answer}")
+#     return {**state, "sql_answer": answer}
+
 def analyst_node(state: GraphState) -> GraphState:
+    print("[ANALYST_NODE] ENTERED")
     result = analyst_agent.invoke({"messages": [{"role": "user", "content": state["question"]}]})
+    print("[ANALYST_NODE] AGENT RETURNED")
     answer = result["messages"][-1].content
     print(f"[ANALYST AGENT] {answer}")
     return {**state, "sql_answer": answer}
