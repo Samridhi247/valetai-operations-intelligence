@@ -71,8 +71,14 @@ def ask_question(request: QuestionRequest):
 
     print("STEP 1: Request received")
 
+    # result = graph_app.invoke(
+    #     {"question": request.question}
+    # )
     result = graph_app.invoke(
-        {"question": request.question}
+        {"question": request.question},
+        config={
+            "recursion_limit": 4
+        }
     )
 
     print("STEP 2: Graph finished")
