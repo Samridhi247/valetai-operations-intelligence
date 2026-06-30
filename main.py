@@ -96,29 +96,29 @@ def router_node(state: GraphState) -> GraphState:
 
     else:
         routing_prompt = f"""
-You are the routing agent for ValetAI.
+        You are the routing agent for ValetAI.
 
-Classify the user's question into exactly one of these routes:
+        Classify the user's question into exactly one of these routes:
 
-sql:
-Use this if the question can be answered using structured database metrics only.
-Examples: counts, totals, averages, rankings, percentages, missed pickups, completion time.
+        sql:
+        Use this if the question can be answered using structured database metrics only.
+        Examples: counts, totals, averages, rankings, percentages, missed pickups, completion time.
 
-rag:
-Use this if the question requires historical operational notes only.
-Examples: why something happened, root cause, recurring issues, recommendations, patterns.
+        rag:
+        Use this if the question requires historical operational notes only.
+        Examples: why something happened, root cause, recurring issues, recommendations, patterns.
 
-hybrid:
-Use this only if BOTH SQL metrics and historical operational notes are needed.
+        hybrid:
+        Use this only if BOTH SQL metrics and historical operational notes are needed.
 
-Question:
-{question}
+        Question:
+        {question}
 
-Reply with exactly one word only:
-sql
-rag
-hybrid
-"""
+        Reply with exactly one word only:
+        sql
+        rag
+        hybrid
+        """
 
         response = llm.invoke(routing_prompt)
         route = response.content.strip().lower().split()[0]
@@ -151,7 +151,14 @@ def analyst_node(state: GraphState) -> GraphState:
                     "content": state["question"]
                 }
             ]
-        })
+        },
+        
+        config={
+                "recursion_limit": 15,
+                "callbacks": [langfuse_handler],
+            }
+
+        )
 
         answer = result["messages"][-1].content
 
@@ -182,7 +189,12 @@ def resolution_node(state: GraphState) -> GraphState:
                     "content": state["question"]
                 }
             ]
-        })
+        },
+        config={
+                "recursion_limit": 15,
+                "callbacks": [langfuse_handler],
+            }
+        )
 
         answer = result["messages"][-1].content
 
@@ -336,7 +348,7 @@ if __name__ == "__main__":
             "final_answer": None,
         },
         config={
-            "recursion_limit": 10,
+            "recursion_limit": 15,
             "callbacks": [langfuse_handler],
         }
     )
