@@ -68,6 +68,8 @@ class QuestionRequest(BaseModel):
 
 @api.post("/ask")
 def ask_question(request: QuestionRequest):
+    print("===== VERSION CHECK =====")
+    print("Using recursion_limit = 15")
 
     print("STEP 1: Request received")
 
