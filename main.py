@@ -245,9 +245,19 @@ def analyst_node(state: GraphState) -> GraphState:
     return {**state, "sql_answer": answer}
 
 # --- NODE 3: Resolution Agent (RAG) ---
+# def resolution_node(state: GraphState) -> GraphState:
+#     result = resolution_agent.invoke({"messages": [{"role": "user", "content": state["question"]}]})
+#     answer = result["messages"][-1].content
+#     print(f"[RESOLUTION AGENT] {answer}")
+#     return {**state, "rag_answer": answer}
+
 def resolution_node(state: GraphState) -> GraphState:
-    result = resolution_agent.invoke({"messages": [{"role": "user", "content": state["question"]}]})
-    answer = result["messages"][-1].content
+    try:
+        result = resolution_agent.invoke({"messages": [{"role": "user", "content": state["question"]}]})
+        answer = result["messages"][-1].content
+    except Exception as e:
+        print(f"[RESOLUTION_NODE ERROR] {e}")
+        answer = "No relevant historical operational notes were found for this issue. (The notes search encountered a temporary issue — try rephrasing the question.)"
     print(f"[RESOLUTION AGENT] {answer}")
     return {**state, "rag_answer": answer}
 
