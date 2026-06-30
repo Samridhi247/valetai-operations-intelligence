@@ -78,7 +78,6 @@ def ask_question(request: QuestionRequest):
         {"question": request.question},
         config={
             "recursion_limit": 15
-            # "recursion_limit": 4
         }
     )
 
