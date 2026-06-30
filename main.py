@@ -30,7 +30,7 @@ class GraphState(TypedDict):
 
 
 llm = ChatGroq(
-    model="llama-3.3-70b-versatile",
+    model="llama-3.1-8b-instant",
     api_key=os.getenv("GROQ_API_KEY")
 )
 
@@ -155,7 +155,6 @@ def analyst_node(state: GraphState) -> GraphState:
         
         config={
                 "recursion_limit": 15,
-                "callbacks": [langfuse_handler],
             }
 
         )
@@ -191,9 +190,8 @@ def resolution_node(state: GraphState) -> GraphState:
             ]
         },
         config={
-                "recursion_limit": 15,
-                "callbacks": [langfuse_handler],
-            }
+                "recursion_limit": 15
+                }
         )
 
         answer = result["messages"][-1].content
@@ -348,8 +346,7 @@ if __name__ == "__main__":
             "final_answer": None,
         },
         config={
-            "recursion_limit": 15,
-            "callbacks": [langfuse_handler],
+            "recursion_limit": 15
         }
     )
 
