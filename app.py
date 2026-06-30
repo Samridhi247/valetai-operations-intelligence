@@ -77,7 +77,7 @@ def ask_question(request: QuestionRequest):
     result = graph_app.invoke(
         {"question": request.question},
         config={
-            "recursion_limit": 10
+            "recursion_limit": 15
             # "recursion_limit": 4
         }
     )
