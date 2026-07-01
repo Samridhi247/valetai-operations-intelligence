@@ -9,7 +9,6 @@ __pycache__/
 
 node_modules/
 
-data/chroma_db/
 
 .streamlit/secrets.toml
 
