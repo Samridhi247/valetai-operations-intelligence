@@ -177,24 +177,78 @@ def analyst_node(state: GraphState) -> GraphState:
 # ----------------------------
 # Resolution / RAG Node
 # ----------------------------
+# def resolution_node(state: GraphState) -> GraphState:
+#     print("[RESOLUTION_NODE] ENTERED")
+
+#     try:
+#         result = resolution_agent.invoke({
+#             "messages": [
+#                 {
+#                     "role": "user",
+#                     "content": state["question"]
+#                 }
+#             ]
+#         },
+#         config={
+#                 "recursion_limit": 15
+#                 }
+#         )
+
+#         answer = result["messages"][-1].content
+
+#     except Exception as e:
+#         print(f"[RESOLUTION_NODE ERROR] {e}")
+#         answer = "No relevant historical operational notes were found for this issue."
+
+#     print("[RESOLUTION_NODE] AGENT RETURNED")
+#     print(f"[RESOLUTION AGENT] {answer}")
+
+#     return {
+#         **state,
+#         "rag_answer": answer
+#     }
 def resolution_node(state: GraphState) -> GraphState:
     print("[RESOLUTION_NODE] ENTERED")
 
     try:
-        result = resolution_agent.invoke({
-            "messages": [
-                {
-                    "role": "user",
-                    "content": state["question"]
-                }
-            ]
-        },
-        config={
-                "recursion_limit": 15
-                }
-        )
+        from tools.vector_tool import search_operational_notes
+        notes = search_operational_notes.invoke(state["question"])
 
-        answer = result["messages"][-1].content
+        analysis_prompt = f"""You are the Resolution Advisor Agent for ValetAI.
+
+Analyze these retrieved historical operational notes and answer the question.
+
+Question: {state["question"]}
+
+Retrieved Notes:
+{notes}
+
+Answer using exactly this format:
+
+Root Cause Analysis
+-------------------
+Briefly explain the most likely cause based on the notes.
+
+Recurring Issues
+----------------
+Summarize recurring patterns found in the notes.
+
+Supporting Evidence
+--------------------
+List the notes that were actually retrieved.
+
+Recommendations
+--------------
+Provide 2-4 practical recommendations based on the retrieved evidence.
+
+Management Summary
+------------------
+Short executive summary for an operations manager.
+
+If no relevant notes are found, say so explicitly in each section."""
+
+        response = llm.invoke(analysis_prompt)
+        answer = response.content
 
     except Exception as e:
         print(f"[RESOLUTION_NODE ERROR] {e}")
