@@ -5,7 +5,10 @@ from langchain.tools import tool
 # Connect to ChromaDB
 # -------------------------------------------------------
 
-client = chromadb.PersistentClient(path="data/chroma_db")
+# client = chromadb.PersistentClient(path="data/chroma_db")
+import os
+_BASE= os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+client = chromadb.PersistentClient(path=os.path.join(_BASE, "data", "chroma_db"))
 collection = client.get_or_create_collection("operational_notes")
 
 # -------------------------------------------------------
