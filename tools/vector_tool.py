@@ -1,19 +1,11 @@
 import chromadb
 from langchain.tools import tool
 
-# -------------------------------------------------------
-# Connect to ChromaDB
-# -------------------------------------------------------
-
 # client = chromadb.PersistentClient(path="data/chroma_db")
 import os
 _BASE= os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 client = chromadb.PersistentClient(path=os.path.join(_BASE, "data", "chroma_db"))
 collection = client.get_or_create_collection("operational_notes")
-
-# -------------------------------------------------------
-# Known properties
-# -------------------------------------------------------
 
 properties = [
     "Sunset Ridge",
@@ -25,10 +17,6 @@ properties = [
     "Willow Creek",
     "Harbor Pointe"
 ]
-
-# -------------------------------------------------------
-# Vector Search Tool
-# -------------------------------------------------------
 
 @tool
 def search_operational_notes(query: str) -> str:
@@ -58,10 +46,7 @@ def search_operational_notes(query: str) -> str:
     Otherwise search across the complete knowledge base.
     """
 
-    # -------------------------------------------------------
     # Detect property mentioned in the query
-    # -------------------------------------------------------
-
     detected_property = None
 
     for prop in properties:
@@ -69,10 +54,7 @@ def search_operational_notes(query: str) -> str:
             detected_property = prop
             break
 
-    # -------------------------------------------------------
     # Perform vector search
-    # -------------------------------------------------------
-
     if detected_property:
         results = collection.query(
             query_texts=[query],
@@ -103,10 +85,7 @@ def search_operational_notes(query: str) -> str:
 
     return "\n".join(formatted)
 
-    # -------------------------------------------------------
     # Extract results
-    # -------------------------------------------------------
-
     # notes = results["documents"][0]
     # metadatas = results["metadatas"][0]
 
