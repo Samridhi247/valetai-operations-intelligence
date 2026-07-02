@@ -555,7 +555,7 @@ Through this project I gained practical experience in
 
 Associate Software Engineering Intern
 
-Built as part of an enterprise AI Engineering internship focused on Data Engineering, Agentic AI, and Cloud Deployment.
+Built as part of Accenture internship focused on Data Engineering, Agentic AI, and Cloud Deployment.
 
 ---
 
