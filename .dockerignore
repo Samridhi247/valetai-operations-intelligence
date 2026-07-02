@@ -5,5 +5,4 @@ __pycache__/
 .gitignore
 .vscode/
 node_modules/
-data/chroma_db/
 *.md
