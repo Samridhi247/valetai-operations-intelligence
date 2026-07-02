@@ -24,8 +24,8 @@ def ask_question(request: QuestionRequest):
     result = graph_app.invoke(
         {"question": request.question},
         config={
-            "recursion_limit": 15,
-            "callbacks": [langfuse_handler]
+            "recursion_limit": 15
+            # "callbacks": [langfuse_handler]
         }
     )
     print("STEP 2: Graph finished")
