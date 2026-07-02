@@ -35,9 +35,7 @@ llm = ChatGroq(
 )
 
 
-# ----------------------------
 # Router Node
-# ----------------------------
 def router_node(state: GraphState) -> GraphState:
     question = state["question"]
     question_lower = question.lower()
@@ -137,9 +135,7 @@ def router_node(state: GraphState) -> GraphState:
     }
 
 
-# ----------------------------
 # Analyst / SQL Node
-# ----------------------------
 def analyst_node(state: GraphState) -> GraphState:
     print("[ANALYST_NODE] ENTERED")
 
@@ -174,7 +170,6 @@ def analyst_node(state: GraphState) -> GraphState:
     }
 
 
-# ----------------------------
 # Resolution / RAG Node
 # ----------------------------
 # def resolution_node(state: GraphState) -> GraphState:
@@ -263,9 +258,7 @@ If no relevant notes are found, say so explicitly in each section."""
     }
 
 
-# ----------------------------
 # Synthesizer Node
-# ----------------------------
 def synthesizer_node(state: GraphState) -> GraphState:
     print("[SYNTHESIZER_NODE] ENTERED")
 
@@ -326,9 +319,7 @@ Summary
     }
 
 
-# ----------------------------
 # Routing Decisions
-# ----------------------------
 def route_decision(state: GraphState) -> Literal["analyst", "resolution"]:
     route = state.get("route")
 
